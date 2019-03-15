@@ -5,11 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-    <h2>Hello World</h2>
-    <h3>Welcome to Javascript</h3>
-    <h1>helloooo</h1>
-    
+     <div id="container">
+        <table class="table">
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Tel</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Zip</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody id="myTable">
+             
+            </tbody>
+          </table>
+     </div>
+     <script>
+     const data = [
+    {
+        "fname": "Marvin",
+        "lname": "Breeland",
+        "tel": "(936)956-3208",
+        "address": "1317 Vel Ct",
+        "city": "Salt Lake City",
+        "state": "AZ",
+        "zip": 56059
+    },
+    {
+        "fname": "Esmeralda",
+        "lname": "Lowe",
+        "tel": "(373)102-4097",
+        "address": "4183 Nunc Dr",
+        "city": "Lewiston",
+        "state": "MT",
+        "zip": 74882
+    },
+    {
+        "fname": "Mihai",
+        "lname": "More",
+        "tel": "(939)482-5050",
+        "address": "4996 Sed Ct",
+        "city": "North Kingstown",
+        "state": "LA",
+        "zip": 75808
+    },
+    {
+        "fname": "Colette",
+        "lname": "Coggins",
+        "tel": "(392)307-6009",
+        "address": "7063 Mi Ln",
+        "city": "Middleburg",
+        "state": "MN",
+        "zip": 28687
+    },
+    {
+        "fname": "Alvin",
+        "lname": "Lazcano",
+        "tel": "(665)437-2259",
+        "address": "1204 Nec Ct",
+        "city": "Albany",
+        "state": "WI",
+        "zip": 77309
+    }
+]
+
+for ( a in data ){
+    console.log(data[a])
+    var tr = document.createElement("tr")
+    for ( b in data[a]){
+        var td = document.createElement("td")
+        tr.appendChild(td)
+        td.innerHTML= data[a][b]
+    }
+    var editTd= document.createElement("td")
+    var editBtn= document.createElement("button");
+    editBtn.innerHTML = "Edit";
+    editBtn.setAttribute("class","btn btn-info")
+    editTd.appendChild(editBtn)
+    var deleteTd = document.createElement("td")
+    var delBtn= document.createElement("button");
+    delBtn.innerHTML="Delete";
+    delBtn.setAttribute("class","btn btn-danger");
+    deleteTd.appendChild(delBtn)
+    tr.appendChild(editTd)
+    tr.appendChild(deleteTd)
+    document.getElementById("myTable").appendChild(tr)
+}
+     </script>
 </body>
 </html>
