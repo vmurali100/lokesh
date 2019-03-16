@@ -1,104 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-<body>
-     <div id="container">
-        <table class="table">
-            <thead>
-              <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Tel</th>
-                <th>Address</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Zip</th>
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody id="myTable">
-             
-            </tbody>
-          </table>
-     </div>
-     <script>
-     const data = [
-    {
-        "fname": "Marvin",
-        "lname": "Breeland",
-        "tel": "(936)956-3208",
-        "address": "1317 Vel Ct",
-        "city": "Salt Lake City",
-        "state": "AZ",
-        "zip": 56059
-    },
-    {
-        "fname": "Esmeralda",
-        "lname": "Lowe",
-        "tel": "(373)102-4097",
-        "address": "4183 Nunc Dr",
-        "city": "Lewiston",
-        "state": "MT",
-        "zip": 74882
-    },
-    {
-        "fname": "Mihai",
-        "lname": "More",
-        "tel": "(939)482-5050",
-        "address": "4996 Sed Ct",
-        "city": "North Kingstown",
-        "state": "LA",
-        "zip": 75808
-    },
-    {
-        "fname": "Colette",
-        "lname": "Coggins",
-        "tel": "(392)307-6009",
-        "address": "7063 Mi Ln",
-        "city": "Middleburg",
-        "state": "MN",
-        "zip": 28687
-    },
-    {
-        "fname": "Alvin",
-        "lname": "Lazcano",
-        "tel": "(665)437-2259",
-        "address": "1204 Nec Ct",
-        "city": "Albany",
-        "state": "WI",
-        "zip": 77309
-    }
-]
 
-for ( a in data ){
-    console.log(data[a])
-    var tr = document.createElement("tr")
-    for ( b in data[a]){
-        var td = document.createElement("td")
-        tr.appendChild(td)
-        td.innerHTML= data[a][b]
-    }
-    var editTd= document.createElement("td")
-    var editBtn= document.createElement("button");
-    editBtn.innerHTML = "Edit";
-    editBtn.setAttribute("class","btn btn-info")
-    editTd.appendChild(editBtn)
-    var deleteTd = document.createElement("td")
-    var delBtn= document.createElement("button");
-    delBtn.innerHTML="Delete";
-    delBtn.setAttribute("class","btn btn-danger");
-    deleteTd.appendChild(delBtn)
-    tr.appendChild(editTd)
-    tr.appendChild(deleteTd)
-    document.getElementById("myTable").appendChild(tr)
-}
-     </script>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <button onclick="showCreate()" class="btn btn-info">Create</button>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Tel</th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Zip</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <form id="myForm" style="display:none">
+                    <div class="form-group">
+                        <label for="fname">First Name</label>
+                        <input type="text" class="form-control" id="fname" placeholder="Enter First Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="lname">Last Name</label>
+                        <input type="text" class="form-control" id="lname" placeholder="Enter Last Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="tel">Tel</label>
+                        <input type="text" class="form-control" id="tel" placeholder="Enter First Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" id="address" placeholder="Enter Address">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" class="form-control" id="city" placeholder="Enter City">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <input type="text" class="form-control" id="state" placeholder="Enter State">
+                    </div>
+                    <div class="form-group">
+                        <label for="zip">Zip</label>
+                        <input type="text" class="form-control" id="zip" placeholder="Enter Zip">
+                    </div>
+                    <button type="button" style="display:none" class="btn btn-primary" onclick="update()" id="updateFriend">Update</button>
+                    <button type="button" style="display:none" class="btn btn-primary" onclick="create()" id="createFriend">Create</button>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        const data = [
+            {
+                "fname": "Marvin",
+                "lname": "Breeland",
+                "tel": "(936)956-3208",
+                "address": "1317 Vel Ct",
+                "city": "Salt Lake City",
+                "state": "AZ",
+                "zip": 56059
+            },
+            {
+                "fname": "Esmeralda",
+                "lname": "Lowe",
+                "tel": "(373)102-4097",
+                "address": "4183 Nunc Dr",
+                "city": "Lewiston",
+                "state": "MT",
+                "zip": 74882
+            },
+            {
+                "fname": "Mihai",
+                "lname": "More",
+                "tel": "(939)482-5050",
+                "address": "4996 Sed Ct",
+                "city": "North Kingstown",
+                "state": "LA",
+                "zip": 75808
+            },
+            {
+                "fname": "Colette",
+                "lname": "Coggins",
+                "tel": "(392)307-6009",
+                "address": "7063 Mi Ln",
+                "city": "Middleburg",
+                "state": "MN",
+                "zip": 28687
+            },
+            {
+                "fname": "Alvin",
+                "lname": "Lazcano",
+                "tel": "(665)437-2259",
+                "address": "1204 Nec Ct",
+                "city": "Albany",
+                "state": "WI",
+                "zip": 77309
+            }
+        ]
+
+        function display(data) {
+            document.getElementById("myTable").innerHTML="";
+            for (a in data) {
+                console.log(data[a])
+                var tr = document.createElement("tr")
+                for (b in data[a]) {
+                    var td = document.createElement("td")
+                    tr.appendChild(td)
+                    td.innerHTML = data[a][b]
+                }
+
+                var editTd = document.createElement("td")
+                var editBtn = document.createElement("button");
+                editBtn.innerHTML = "Edit";
+                editBtn.setAttribute("class", "btn btn-info");
+                editBtn.setAttribute("onclick","editFriend("+a+")")
+                editTd.appendChild(editBtn)
+
+                var deleteTd = document.createElement("td")
+                var delBtn = document.createElement("button");
+                delBtn.innerHTML = "Delete";
+                delBtn.setAttribute("class", "btn btn-danger");
+                delBtn.setAttribute("onclick","deleteFriend("+a+")")
+                deleteTd.appendChild(delBtn)
+
+
+                tr.appendChild(editTd)
+                tr.appendChild(deleteTd)
+                document.getElementById("myTable").appendChild(tr)
+            }
+        }
+        display(data)
+        var index;
+        function editFriend(a){
+            index=a;
+            console.log("Edit Friend Called "+a)
+            document.getElementById("myForm").style.display="block";
+            document.getElementById("updateFriend").style.display="block";
+            document.getElementById("createFriend").style.display="none";
+
+            for(abc in data[a]){
+                document.getElementById(abc).value = data[a][abc]
+            }
+        }
+
+        function deleteFriend(a){
+            data.splice(a,1)
+            display(data);
+            console.log("Delete Friend Called")
+        }
+
+        function update(){
+            var newObj={}
+            for (a in data[0]){
+                newObj[a]= document.getElementById(a).value
+            }
+            data[index] = newObj;
+            display(data)
+            document.getElementById("myForm").style.display="none"
+        }
+
+        function showCreate(){
+            reset()
+            document.getElementById("myForm").style.display="block";
+            document.getElementById("updateFriend").style.display="none";
+            document.getElementById("createFriend").style.display="block";
+
+
+        }
+
+        function create(){
+            var newObj = {}
+            for (a in data[0]){
+                newObj[a]=document.getElementById(a).value
+            }
+            data.push(newObj);
+            display(data)
+            document.getElementById("myForm").style.display="none"
+        }
+
+        function reset(){
+            for (a in data[0]){
+                document.getElementById(a).value=""
+            }
+        }
+    </script>
 </body>
+
 </html>
