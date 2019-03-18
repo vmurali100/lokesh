@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+            <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                        <th>Phone</th>
+                        <th>Website</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody id="myTable">
+                      
+                    </tbody>
+                  </table>
+    </div>
+    <script>
+        var data ;
+
+        var getInfo = new XMLHttpRequest;
+        getInfo.onreadystatechange=function (){
+            if(getInfo.readyState == 4 && getInfo.status == 200){
+                data = JSON.parse(getInfo.response);
+                display(data)
+            }
+        }
+        getInfo.open("GET","https://jsonplaceholder.typicode.com/users");
+        getInfo.send()
+
+        console.log(getInfo)
+        function display(data){
+            document.getElementById("myTable").innerHTML = "";
+            for (a in data){
+                var tr = document.createElement("tr");
+                for(b in data[a]){
+                    if(b != "address" && b != "company"){
+                        var td = document.createElement("td")
+                        td.innerHTML= data[a][b]// 
+                        tr.appendChild(td)
+                    }
+                   
+                }
+
+                // editButton
+                var editTd = document.createElement("td");
+                var editBtn = document.createElement("button")
+                editBtn.innerHTML="Edit";
+                editBtn.setAttribute("class","btn btn-info");
+                editBtn.setAttribute("onclick","editUser("+a+")")
+                editTd.appendChild(editBtn)
+                // DeleteTd
+                var deleteTd= document.createElement("td")
+                var deleteBtn = document.createElement("button");
+                deleteBtn.innerHTML="Delete";
+                deleteBtn.setAttribute("class","btn btn-danger")
+                deleteBtn.setAttribute("onclick","deleteUser("+a+")")
+
+                deleteTd.appendChild(deleteBtn);
+
+                tr.appendChild(editTd);
+                tr.appendChild(deleteTd)
+                document.getElementById("myTable").appendChild(tr)
+            }
+        }
+
+        function editUser(i){
+            console.log(i)
+        }
+
+        function deleteUser(i){
+            console.log(i)
+            data.splice(i,1);
+            display(data)
+        }
+    </script>
+</body>
+</html>

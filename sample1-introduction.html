@@ -73,6 +73,7 @@
         </div>
 
     </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.js"></script>
     <script>
         const data = [
             {
@@ -124,34 +125,48 @@
 
         function display(data) {
             document.getElementById("myTable").innerHTML="";
-            for (a in data) {
-                console.log(data[a])
-                var tr = document.createElement("tr")
-                for (b in data[a]) {
-                    var td = document.createElement("td")
-                    tr.appendChild(td)
-                    td.innerHTML = data[a][b]
-                }
+          
+            $(data).each(function (index,obj){
+                var tr = $("<tr></tr>")
+                
+                    $.each(obj,function (pro,index){
+                        var td = $("<td>"+obj[pro]+"</td>")
+                        tr.append(td)
+                    })
+                    var editTd=$("<td><button onclick='editFriend("+index+")' class='btn btn-info'>Edit</button></td>");
+                    tr.append(editTd)
+                    var deleteTd=$("<td><button onclick='deleteFriend("+index+")' class='btn btn-danger'>Delete</button></td>")
+                    tr.append(deleteTd)
+                    $("#myTable").append(tr)
+            })
+            // for (a in data) {
 
-                var editTd = document.createElement("td")
-                var editBtn = document.createElement("button");
-                editBtn.innerHTML = "Edit";
-                editBtn.setAttribute("class", "btn btn-info");
-                editBtn.setAttribute("onclick","editFriend("+a+")")
-                editTd.appendChild(editBtn)
+            //     var tr = document.createElement("tr")
+            //     for (b in data[a]) {
+            //         var td = document.createElement("td")
+            //         tr.appendChild(td)
+            //         td.innerHTML = data[a][b]
+            //     }
 
-                var deleteTd = document.createElement("td")
-                var delBtn = document.createElement("button");
-                delBtn.innerHTML = "Delete";
-                delBtn.setAttribute("class", "btn btn-danger");
-                delBtn.setAttribute("onclick","deleteFriend("+a+")")
-                deleteTd.appendChild(delBtn)
+            //     var editTd = document.createElement("td")
+            //     var editBtn = document.createElement("button");
+            //     editBtn.innerHTML = "Edit";
+            //     editBtn.setAttribute("class", "btn btn-info");
+            //     editBtn.setAttribute("onclick","editFriend("+a+")")
+            //     editTd.appendChild(editBtn)
+
+            //     var deleteTd = document.createElement("td")
+            //     var delBtn = document.createElement("button");
+            //     delBtn.innerHTML = "Delete";
+            //     delBtn.setAttribute("class", "btn btn-danger");
+            //     delBtn.setAttribute("onclick","deleteFriend("+a+")")
+            //     deleteTd.appendChild(delBtn)
 
 
-                tr.appendChild(editTd)
-                tr.appendChild(deleteTd)
-                document.getElementById("myTable").appendChild(tr)
-            }
+            //     tr.appendChild(editTd)
+            //     tr.appendChild(deleteTd)
+            //     document.getElementById("myTable").appendChild(tr)
+            // }
         }
         display(data)
         var index;
