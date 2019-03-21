@@ -8,8 +8,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-    <div class="container">
-            <table class="table">
+    <div class="container-fluid">
+           <div class="row">
+               <div class="col-md-10">
+                <table class="table">
                     <thead>
                       <tr>
                         <th scope="col">#</th>
@@ -26,6 +28,11 @@
                       
                     </tbody>
                   </table>
+               </div>
+               <div class="col-md-3">
+
+               </div>
+           </div>
     </div>
     <script>
         var data ;
@@ -54,30 +61,36 @@
                    
                 }
 
+                addEditButton(tr,a)
                 // editButton
-                var editTd = document.createElement("td");
-                var editBtn = document.createElement("button")
-                editBtn.innerHTML="Edit";
-                editBtn.setAttribute("class","btn btn-info");
-                editBtn.setAttribute("onclick","editUser("+a+")")
-                editTd.appendChild(editBtn)
+               
                 // DeleteTd
-                var deleteTd= document.createElement("td")
-                var deleteBtn = document.createElement("button");
-                deleteBtn.innerHTML="Delete";
-                deleteBtn.setAttribute("class","btn btn-danger")
-                deleteBtn.setAttribute("onclick","deleteUser("+a+")")
-
-                deleteTd.appendChild(deleteBtn);
-
-                tr.appendChild(editTd);
-                tr.appendChild(deleteTd)
+                addDeleteButton(tr,a)
+               
                 document.getElementById("myTable").appendChild(tr)
             }
         }
 
         function editUser(i){
-            console.log(i)
+    
+            document.getElementById('myTable').deleteRow(i)
+           var newrow = document.getElementById('myTable').insertRow(i)
+            var ind=0
+            for (a in data[i]){
+                if(a != "company" && a != "address"){
+                    var newCell = newrow.insertCell(ind);
+                    var input = document.createElement("input");
+                    input.setAttribute('class','form-control');
+                    input.value = data[i][a]
+                    newCell.appendChild(input)
+                    ind++
+                }
+                
+            }
+            // addEditButton(newrow);
+            addupdateButton(newrow,i)
+            addDeleteButton(newrow,i)
+           document.getElementById('myTable').insertRow()
         }
 
         function deleteUser(i){
@@ -85,6 +98,38 @@
             data.splice(i,1);
             display(data)
         }
+
+        function addEditButton(tr,a){
+            var editTd = document.createElement("td");
+                var editBtn = document.createElement("button")
+                editBtn.innerHTML="Edit";
+                editBtn.setAttribute("class","btn btn-info");
+                editBtn.setAttribute("onclick","editUser("+a+")")
+                editTd.appendChild(editBtn)
+                tr.appendChild(editTd);
+        }
+
+        function addDeleteButton(tr,a){
+            var deleteTd= document.createElement("td")
+                var deleteBtn = document.createElement("button");
+                deleteBtn.innerHTML="Delete";
+                deleteBtn.setAttribute("class","btn btn-danger")
+                deleteBtn.setAttribute("onclick","deleteUser("+a+")")
+                deleteTd.appendChild(deleteBtn);
+                tr.appendChild(deleteTd)
+            
+        }
+        function addupdateButton(tr,a){
+            var updateTd = document.createElement("td");
+                var updateBtn = document.createElement("button")
+                updateBtn.innerHTML="Update";
+                updateBtn.setAttribute("class","btn btn-warning");
+                updateBtn.setAttribute("onclick","editUser("+a+")")
+                updateTd.appendChild(updateBtn)
+                tr.appendChild(updateTd);
+        }
+
+
     </script>
 </body>
 </html>
