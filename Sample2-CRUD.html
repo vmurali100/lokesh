@@ -90,7 +90,7 @@
             // addEditButton(newrow);
             addupdateButton(newrow,i)
             addDeleteButton(newrow,i)
-           document.getElementById('myTable').insertRow()
+           //document.getElementById('myTable').insertRow()
         }
 
         function deleteUser(i){
@@ -124,9 +124,27 @@
                 var updateBtn = document.createElement("button")
                 updateBtn.innerHTML="Update";
                 updateBtn.setAttribute("class","btn btn-warning");
-                updateBtn.setAttribute("onclick","editUser("+a+")")
+                updateBtn.setAttribute("onclick","updateUser("+a+")")
                 updateTd.appendChild(updateBtn)
                 tr.appendChild(updateTd);
+        }
+        function updateUser(i){
+            document.getElementById("myTable").deleteRow(i)
+            var newrow = document.getElementById("myTable").insertRow(i)
+            var ind=0
+            for (a in data[i]){
+                if(a != "company" && a != "address"){
+                    var newCell = newrow.insertCell(ind);
+                    var inputtd = document.createElement("td");
+                    inputtd.value = data[i][a]
+                    newCell.appendChild(inputtd)
+                    ind++
+                }
+                
+            }
+            addEditButton(newrow,i)
+            addDeleteButton(newrow,i)
+
         }
 
 
