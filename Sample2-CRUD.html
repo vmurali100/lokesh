@@ -36,7 +36,8 @@
     </div>
     <script>
         var data ;
-
+        var isEdit= false;
+        var selectedObject ;
         var getInfo = new XMLHttpRequest;
         getInfo.onreadystatechange=function (){
             if(getInfo.readyState == 4 && getInfo.status == 200){
@@ -62,9 +63,6 @@
                 }
 
                 addEditButton(tr,a)
-                // editButton
-               
-                // DeleteTd
                 addDeleteButton(tr,a)
                
                 document.getElementById("myTable").appendChild(tr)
@@ -72,8 +70,9 @@
         }
 
         function editUser(i){
-    
-            document.getElementById('myTable').deleteRow(i)
+            selectedObject = i;
+            if(!isEdit){
+           document.getElementById('myTable').deleteRow(i)
            var newrow = document.getElementById('myTable').insertRow(i)
             var ind=0
             for (a in data[i]){
@@ -81,6 +80,7 @@
                     var newCell = newrow.insertCell(ind);
                     var input = document.createElement("input");
                     input.setAttribute('class','form-control');
+                    input.setAttribute('id',a+ind)
                     input.value = data[i][a]
                     newCell.appendChild(input)
                     ind++
@@ -91,6 +91,12 @@
             addupdateButton(newrow,i)
             addDeleteButton(newrow,i)
            //document.getElementById('myTable').insertRow()
+            }else{
+                updateUser(updateUserIndex);
+                isEdit = false;
+                editUser(i)
+            }
+           
         }
 
         function deleteUser(i){
@@ -100,53 +106,54 @@
         }
 
         function addEditButton(tr,a){
-            var editTd = document.createElement("td");
-                var editBtn = document.createElement("button")
-                editBtn.innerHTML="Edit";
-                editBtn.setAttribute("class","btn btn-info");
-                editBtn.setAttribute("onclick","editUser("+a+")")
-                editTd.appendChild(editBtn)
-                tr.appendChild(editTd);
+            addCommonButton(tr,a,"Edit")
         }
 
         function addDeleteButton(tr,a){
-            var deleteTd= document.createElement("td")
-                var deleteBtn = document.createElement("button");
-                deleteBtn.innerHTML="Delete";
-                deleteBtn.setAttribute("class","btn btn-danger")
-                deleteBtn.setAttribute("onclick","deleteUser("+a+")")
-                deleteTd.appendChild(deleteBtn);
-                tr.appendChild(deleteTd)
-            
+            addCommonButton(tr,a,"Delete")
+
         }
         function addupdateButton(tr,a){
-            var updateTd = document.createElement("td");
-                var updateBtn = document.createElement("button")
-                updateBtn.innerHTML="Update";
-                updateBtn.setAttribute("class","btn btn-warning");
-                updateBtn.setAttribute("onclick","updateUser("+a+")")
-                updateTd.appendChild(updateBtn)
-                tr.appendChild(updateTd);
+            isEdit = true;
+            updateUserIndex= a;
+            addCommonButton(tr,a,"Update")
         }
         function updateUser(i){
-            document.getElementById("myTable").deleteRow(i)
-            var newrow = document.getElementById("myTable").insertRow(i)
+            var allRows = document.getElementsByTagName('tr');
+            console.log(allRows[i+1])
             var ind=0
+            var updatedObject = {};
             for (a in data[i]){
                 if(a != "company" && a != "address"){
-                    var newCell = newrow.insertCell(ind);
-                    var inputtd = document.createElement("td");
-                    inputtd.value = data[i][a]
-                    newCell.appendChild(inputtd)
+                    updatedObject[a] = document.getElementById(a+ind).value
                     ind++
                 }
-                
+                       
             }
-            addEditButton(newrow,i)
-            addDeleteButton(newrow,i)
-
-        }
-
+            document.getElementById("myTable").deleteRow(i)
+            data[i] = updatedObject;
+            isEdit = false;
+            display(data)
+            }
+         function addCommonButton(row,a,event){
+                if(event == "Edit"){
+                    eventInfo= "editUser("+a+")";
+                    cls = "info"
+                }else if( event == "Delete"){
+                    eventInfo= "deleteUser("+a+")";
+                    cls = "danger"
+                } else if(event == "Update"){
+                    eventInfo= "updateUser("+a+")";
+                    cls = "warning"
+                }
+                var editTd = document.createElement("td");
+                var editBtn = document.createElement("button")
+                editBtn.innerHTML=event;
+                editBtn.setAttribute("class","btn btn-"+cls);
+                editBtn.setAttribute("onclick",eventInfo)
+                editTd.appendChild(editBtn)
+                row.appendChild(editTd);
+         }
 
     </script>
 </body>
