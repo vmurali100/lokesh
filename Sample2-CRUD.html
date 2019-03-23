@@ -34,21 +34,28 @@
                </div>
            </div>
     </div>
+    <script
+  src="http://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+    
     <script>
         var data ;
         var isEdit= false;
-        var selectedObject ;
-        var getInfo = new XMLHttpRequest;
+        var selectedObject;
+        function getLatest(){
+            var getInfo = new XMLHttpRequest;
         getInfo.onreadystatechange=function (){
             if(getInfo.readyState == 4 && getInfo.status == 200){
                 data = JSON.parse(getInfo.response);
                 display(data)
             }
         }
-        getInfo.open("GET","https://jsonplaceholder.typicode.com/users");
+        getInfo.open("GET","http://localhost:3000/users");
         getInfo.send()
-
-        console.log(getInfo)
+        }
+        
+        
         function display(data){
             document.getElementById("myTable").innerHTML = "";
             for (a in data){
@@ -100,9 +107,20 @@
         }
 
         function deleteUser(i){
-            console.log(i)
-            data.splice(i,1);
-            display(data)
+            console.log(data[i])
+            //data.splice(i,1);
+            $.ajax({
+                url: "http://localhost:3000/users/" + data[i].id,
+                type: 'DELETE',
+
+                success: function(result) {
+                    // Do something with the result
+                    getLatest();
+                }
+            });
+          //  delete()
+          //  display(data)
+         
         }
 
         function addEditButton(tr,a){
@@ -154,6 +172,8 @@
                 editTd.appendChild(editBtn)
                 row.appendChild(editTd);
          }
+
+         getLatest();
 
     </script>
 </body>
