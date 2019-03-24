@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Assignment2</title>
+</head>
+<style>
+    .stateIds {
+        border: 2px solid #000;
+        background-color: forestgreen;
+        width: 100px;
+        height: 30px;
+        border-radius: 3px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        color: #fff;
+        text-align: center;
+        cursor: pointer;
+    }
+    .stateIds:hover{
+        background-color:chocolate;
+    }
+    .myStates {
+        width: 100px;
+    }
+    .popUp {
+        position: absolute;
+        top: 10px;
+        left: 240px;
+        width: 600px;
+        height: auto;
+        background-color: darkkhaki;
+        border: 2px solid #000;
+   }
+</style>
+<body>
+    <div class="container">
+        <div class="" id="myStates">
+        </div>
+        <div class="popUp">
+            <div class="details">Name:</div>
+            <div class="details">Capital:</div>
+            <div class="details">Language:</div>
+        </div>
+    </div>
+    <script>
+        const states = [
+            {
+                
+                "id": "state1",
+                "name": "Andhra Pradesh",
+                "capital": "Amaravathi",
+                "language": "Telugu"
+            },
+            {
+                "id": "state2",
+                "name": "Telangana",
+                "capital": "Hyderabad",
+                "language": "Telugu"
+            },
+            {
+                "id": "state3",
+                "name": "Arunachal Pradesh",
+                "capital": "Itanagar",
+                "language": "Abo Tani"
+            },
+            {
+                "id": "state4",
+                "name": "Goa",
+                "capital": "Panaji",
+                "language": "Konkani"
+            },
+            {
+                "id": "state5",
+                "name": "Maharastra",
+                "capital": "Mumbai",
+                "language": "Marathini"
+            }
+
+        ]
+        for(a in states){
+            var stateNames = document.createElement("div");
+            stateNames.innerHTML = states[a].id
+            stateNames.setAttribute("class","stateIds")
+            stateNames.setAttribute("id", "my_"+states[a].id+"")
+            document.getElementById("myStates").appendChild(stateNames)
+            var clickable = document.getElementsByClassName("stateIds");
+
+        }
+   
+    
+    </script>
+</body>
+
+</html>
