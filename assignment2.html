@@ -86,13 +86,17 @@
             var stateNames = document.createElement("div");
             stateNames.innerHTML = states[a].id
             stateNames.setAttribute("class","stateIds")
-            stateNames.setAttribute("id", "my_"+states[a].id+"")
+            stateNames.setAttribute("id", "my_"+states[a]['id']+"")
+            stateNames.setAttribute("onclick", "show("+a+")")
+
             document.getElementById("myStates").appendChild(stateNames)
             var clickable = document.getElementsByClassName("stateIds");
 
         }
    
-    
+        function show(id){
+            console.log(id)
+        }
     </script>
 </body>
 
