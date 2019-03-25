@@ -42,9 +42,9 @@
         <div class="" id="myStates">
         </div>
         <div class="popUp">
-            <div class="details">Name:</div>
-            <div class="details">Capital:</div>
-            <div class="details">Language:</div>
+            <div class="name">Name:</div>
+            <div class="capital">Capital:</div>
+            <div class="language">Language:</div>
         </div>
     </div>
     <script>
@@ -95,7 +95,12 @@
         }
    
         function show(id){
-            console.log(id)
+            console.log(states[id])
+            for (a in states[id]){
+                if(a != "id"){
+                    document.getElementsByClassName(a)[0].innerHTML = a +" : "+states[id][a]
+                }
+            }
         }
     </script>
 </body>
