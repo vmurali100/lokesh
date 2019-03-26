@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file" style="display:none" id="myInput">
+    <button onclick="" id="myBtn">Click</button>
+    <button onclick="showValidate()" id="mySubmit">Submit</button>
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function (){
+            $('#myBtn').click(function (){
+                $("#myInput").trigger('click');
+                
+            })
+
+        })
+        function showValidate(){
+            var ext = $('#myInput').val().split('.').pop().toLowerCase();
+                if($.inArray(ext, ['wav']) == -1) {
+                    alert('invalid extension!');
+                }else{
+                    alert("its Valid")
+                }
+        }
+    </script>
+</body>
+</html>
