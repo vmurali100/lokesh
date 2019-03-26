@@ -27,7 +27,7 @@
     .myStates {
         width: 100px;
     }
-    .popUp {
+    #popUp {
         position: absolute;
         top: 10px;
         left: 240px;
@@ -41,7 +41,7 @@
     <div class="container">
         <div class="" id="myStates">
         </div>
-        <div class="popUp">
+        <div id="popUp" style="display: none">
             <div class="name">Name:</div>
             <div class="capital">Capital:</div>
             <div class="language">Language:</div>
@@ -79,6 +79,36 @@
                 "name": "Maharastra",
                 "capital": "Mumbai",
                 "language": "Marathini"
+            },
+            {
+                "id": "state6",
+                "name": "Karnataka",
+                "capital": "Bangalore",
+                "language": "Kannada"
+            },
+            {
+                "id": "state7",
+                "name": "Tamilnadu",
+                "capital": "Chennai",
+                "language": "Tamil"
+            },
+            {
+                "id": "state8",
+                "name": "Kerala",
+                "capital": "Trivandram",
+                "language": "Malayalam"
+            },
+            {
+                "id": "state9",
+                "name": "West Bengal",
+                "capital": "Kolkata",
+                "language": "Bengali"
+            },
+            {
+                "id": "state10",
+                "name": "Bihar",
+                "capital": "Patna",
+                "language": "Bhojpuri"
             }
 
         ]
@@ -90,12 +120,11 @@
             stateNames.setAttribute("onclick", "show("+a+")")
 
             document.getElementById("myStates").appendChild(stateNames)
-            var clickable = document.getElementsByClassName("stateIds");
 
         }
    
         function show(id){
-            console.log(states[id])
+            document.getElementById("popUp").style.display = "block"
             for (a in states[id]){
                 if(a != "id"){
                     document.getElementsByClassName(a)[0].innerHTML = a +" : "+states[id][a]
