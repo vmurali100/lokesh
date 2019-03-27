@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-comp1',
-  templateUrl: './comp1.component.html',
-  styleUrls: ['./comp1.component.css']
+  selector: 'app-child-comp',
+  templateUrl: './child-comp.component.html',
+  styleUrls: ['./child-comp.component.css']
 })
-export class Comp1Component implements OnInit {
-  usersDetails: { "fname": string; "lname": string; "tel": string; "address": string; "city": string; "state": string; "zip": number; }[];
-  constructor() { }
-  selectedInfo;
-  ngOnInit() {
-    this.usersDetails = users;
-  }
-  
+export class ChildCompComponent implements OnInit {
+  dataTrans: { "fname": string; "lname": string; "tel": string; "address": string; "city": string; "state": string; "zip": number; }[];
 
+  constructor() { }
+  @Output() passData = new EventEmitter();
+  ngOnInit() {
+    this.dataTrans = users;
+  }
+  sendToParent(user){
+    this.passData.emit(user)
+  }
 
 }
 const users = [
@@ -63,3 +65,4 @@ const users = [
       "zip": 29514
   }
 ]
+
