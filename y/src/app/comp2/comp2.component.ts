@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ReflectiveDependency } from '@angular/core/src/di/reflective_provider';
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-comp2',
@@ -8,9 +9,14 @@ import { ReflectiveDependency } from '@angular/core/src/di/reflective_provider';
 })
 export class Comp2Component implements OnInit {
   @Input() Recievedd;
-  constructor() { }
+
+  heading = "I am Heading from Comp2"
+  constructor(public commonService :CommonService) { }
 
   ngOnInit() {
+    
   }
-
+  sendInfo(){
+    this.commonService.sendDetail(this.heading);
+  }
 }

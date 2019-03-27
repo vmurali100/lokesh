@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-comp3',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Comp3Component implements OnInit {
 
-  constructor() { }
+  constructor(public commonService:CommonService) { }
 
   ngOnInit() {
+    console.log("Helo")
+    this.commonService.sendData.subscribe((data)=>{
+      console.log(data)
+    })
   }
 
 }
