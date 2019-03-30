@@ -10,15 +10,15 @@
     </thead>
     <tbody>
      
-      <tr *ngFor="let user of data">
+      <tr *ngFor="let user of data; let i=index">
         <td>{{user.fname}}</td>
         <td>{{user.lname}}</td>
         <td>{{user.tel}}</td>
         <td>{{user.address}}</td>
-        <td><button class="btn btn-info" (click)="edit(user)">Edit</button></td>
+        <td><button class="btn btn-info" (click)="edit(user,i)">Edit</button></td>
       </tr>
     </tbody>
   </table>
 </div>
 <hr>
-<app-child [recievedinfo] = "sendData"></app-child>
+<app-child [recievedinfo] = "sendData" (sendInfo)="receiveDetails($event)"></app-child>

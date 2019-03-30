@@ -8,14 +8,20 @@ import { Component, OnInit } from '@angular/core';
 export class ParentComponent implements OnInit {
   data: { "fname": string; "lname": string; "tel": string; "address": string; "city": string; "state": string; "zip": number; }[];
   sendData;
+  index;
   constructor() { }
 
   ngOnInit() {
     this.data = users;
   }
 
-  edit(user){
+  edit(user,i){
     this.sendData = user;
+    this.index = i;
+  }
+  receiveDetails(updated){
+    this.data[this.index].fname = updated;
+    
   }
 }
 
