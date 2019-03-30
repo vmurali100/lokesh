@@ -10,13 +10,10 @@ import { CommonService } from '../common.service';
 export class Comp2Component implements OnInit {
   @Input() Recievedd;
 
-  heading = "I am Heading from Comp2"
   constructor(public commonService :CommonService) { }
 
   ngOnInit() {
     
   }
-  sendInfo(){
-    this.commonService.sendDetail(this.heading);
-  }
+  
 }

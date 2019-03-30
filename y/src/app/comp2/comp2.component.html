@@ -1,4 +1,9 @@
-<p>
-  comp2 works!
-</p>
-<button (click)="sendInfo()">Send Data</button>
+
+<p>This is Comp2</p>
+<div *ngIf="Recievedd">
+  <p>{{Recievedd.fname}}</p>
+  <p>{{Recievedd.lname}}</p>
+  <p>{{Recievedd.tel}}</p>
+  <p>{{Recievedd.address}}</p>
+  
+</div>

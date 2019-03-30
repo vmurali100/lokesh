@@ -1,0 +1,5 @@
+<p>
+  parent-comp works!
+</p>
+<p *ngIf="dataFromParent">{{dataFromParent.fname}}</p>
+<app-child-comp (passData)="reciveData($event)"></app-child-comp>
