@@ -9,6 +9,8 @@ import { Comp3Component } from './comp3/comp3.component';
 import { ParentComponent } from './comp3/parent/parent.component';
 import { ParentCompComponent } from './parent-comp/parent-comp.component';
 import { ChildCompComponent } from './child-comp/child-comp.component';
+import { SecondParentComponent } from './second-parent/second-parent.component';
+import { SecondChildComponent } from './second-child/second-child.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { ChildCompComponent } from './child-comp/child-comp.component';
     Comp3Component,
     ParentComponent,
     ParentCompComponent,
-    ChildCompComponent
+    ChildCompComponent,
+    SecondParentComponent,
+    SecondChildComponent
   ],
   imports: [
     BrowserModule,
