@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Assignment3</title>
+</head>
+<body>
+    <div class="container">
+            <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">S.no.</th>
+                        <th scope="col">First name</th>
+                        <th scope="col">Last name</th>
+                        <th scope="col">Telephone</th>
+                      </tr>
+                    </thead>
+                    <tbody id="myTable">
+                    </tbody>
+                  </table>
+    </div>
+    <script>
+     const data = [
+         {
+             "s.no.": "1",
+             "firstName": "Lokesh",
+             "lastName": "Kumar",
+             "telephone": "123"
+         },
+         {
+             "s.no.": "2",
+             "firstName": "Srikanth",
+             "lastName": "Gowda",
+             "telephone": "234"
+         },
+         {
+             "s.no.": "3",
+             "firstName": "Shasi",
+             "lastName": "Kumar",
+             "telephone": "456"
+         },
+         {
+             "s.no.": "4",
+             "firstName": "Karthik",
+             "lastName": "Espn",
+             "telephone": "567"
+         },
+         {
+             "s.no.": "5",
+             "firstName": "Murali",
+             "lastName": "Krishna",
+             "telephone": "678"
+         },
+         {
+             "s.no.": "6",
+             "firstName": "Sayyed",
+             "lastName": "Ahmed",
+             "telephone": "789"
+         },
+         {
+             "s.no.": "7",
+             "firstName": "Ravi",
+             "lastName": "Teja",
+             "telephone": "891"
+         },
+         {
+             "s.no.": "8",
+             "firstName": "Vamsi",
+             "lastName": "Sana",
+             "telephone": "912"
+         },
+         {
+             "s.no.": "9",
+             "firstName": "Dhanraj",
+             "lastName": "Kumar",
+             "telephone": "9177"
+         },
+         {
+             "s.no.": "10",
+             "firstName": "Sri",
+             "lastName": "Reddy",
+             "telephone": "143"
+         }
+     ]
+
+    for( a in data){
+        var tr = document.createElement("tr")
+        for( b in data[a]){
+            var td = document.createElement("td")
+            td.innerHTML = data[a][b]
+            tr.appendChild(td);
+        }
+    
+        document.getElementById("myTable").appendChild(tr);
+    }
+    </script>
+    
+</body>
+</html>

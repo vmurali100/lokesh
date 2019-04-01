@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <title>Result</title>
+</head>
+<style>
+    .logo{
+        background-image: url("./assets/images/sunovaa-logo-only.png");
+        width: 62px;
+        height: 57px;
+        margin-top: 15px;
+        margin-left: 15px;
+    }
+    .row{
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    .parentOfAudioPlayer {
+        height: 150px;
+        background-color: #f3f8fe;
+    }
+    .parentOfChart{
+        height: 395px;
+        background-color: #f3f8fe;
+    }
+    .parentOfTable{
+        height: 385px;
+        width: 55.7%;
+        position: relative;
+        left: 1%;
+
+    }
+    h3{
+        color: #4ba0fb;
+    }
+</style>
+<body>
+    <header style="height: 80px">
+        <div class="logo"></div>
+        <nav style="margin-top: -40px;">
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="#"><b>Analysis</b></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Help</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <section>
+        <div class="container-fluid">
+            <h3>Audio Input</h3>
+            <div class="parentOfAudioPlayer">
+                    <audio controls= "controls" style="position: relative; top:30%; left: 3%; width: 38%;">
+                            <source src="./assets/audio/Plumbing-Call-Recording.wav" type="audio/wav">
+                          Your browser does not support the audio element.
+                    </audio>
+            <img src="./assets/images/audio-waveform.gif" style="position:relative; width:500px; height: 100px; left: 6%; top: 17%;">
+
+            </div>
+            <h3 style="margin-top: 20px;">Graphical Information</h3>
+            <div class="row">
+                    <div class="parentOfChart col-md-5 pt-5">
+<!--                        <img src="sentiment-analysis-chart-stepped.png" style="margin: 15px; width: 480px; height: 355px;">-->
+                        <canvas id="line-chart" width="200" height="100"></canvas>
+                    </div>
+                    <div class="parentOfTable">
+                            <h3 style="height:30px; position:relative; top: -43px;">Tabular Information</h3>  
+                            <!-- <div id="speakerTxt"></div>                       -->
+                            <!-- <ul class="nav nav-tabs" style="position:relative; top:-38px; width:103%;">
+                                    <li class="nav-item">
+                                      <a class="nav-link active" href="#">Speaker 1</a>
+                                    </li>
+                                    <li class="nav-item">
+                                      <a class="nav-link" href="#">Speaker 2</a>
+                                    </li>
+                                    <li class="nav-item">
+                                      <a class="nav-link" href="#">Silence</a>
+                                    </li>
+                                  </ul> -->
+                            <!--MS speaker tabs with table content: START-->
+                            <!--<ul class="nav nav-tabs" id="myTab" role="tablist">
+                              <li class="nav-item">
+                                <a class="nav-link active" id="spk1-tab" data-toggle="tab" href="#spk1" role="tab" aria-controls="home" aria-selected="true">Speaker1</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" id="spk2-tab" data-toggle="tab" href="#spk2" role="tab" aria-controls="profile" aria-selected="false">Speaker2</a>
+                              </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                              <div class="tab-pane fade show active" id="spk1" role="tabpanel" aria-labelledby="spk1-tab">
+                                <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Emotion</th>
+                                      <th scope="col">EmotionScore</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="spk1Table"></tbody>
+                                </table>  
+                              </div>
+                              <div class="tab-pane fade" id="spk2" role="tabpanel" aria-labelledby="spk2-tab">
+                                <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Emotion</th>
+                                      <th scope="col">EmotionScore</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="spk2Table"></tbody>
+                                </table>  
+                              </div>
+                            </div>-->
+                            <!--MS speaker tabs with table content: END-->
+                          <table class="table" style="position:relative; top:-38px; width:103%; background-color: #f3f8fe;">
+                            <thead>
+                              <tr>
+                                <th scope="col">Speaker</th>
+                                <th scope="col">Start time</th>
+                                <th scope="col">End time</th>
+                                <th scope="col">Emotion</th>
+                                <th scope="col">Emotion score</th>
+                              </tr>
+                            </thead>
+                            <tbody id="myTable">
+
+                            </tbody>
+                          </table>
+                    </div>
+                
+            </div>
+            
+        </div>
+    </section>
+    <footer>
+
+    </footer> 
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script>
+        //script by Lokesh: START
+        var data = {
+            "audioResponse": [
+
+      {
+         "speaker":"spk1",
+         "startTime": "0.0",
+         "endTime": "15.239",
+         "emotion": "neutral",
+         "emotionScore": "0"
+      },
+
+      {
+         "speaker":"silence",
+         "startTime": "15.240",
+         "endTime": "16.900",
+         "emotion": "NA",
+         "emotionScore": "NA"
+      },
+
+      {
+         "speaker":"spk2",
+         "startTime": "16.932",
+         "endTime": "27.320",
+         "emotion": "happy",
+         "emotionScore": "2"
+      },
+
+      {
+         "speaker":"spk1",
+         "startTime": "27.977",
+         "endTime": "37.900",
+         "emotion": "anger",
+         "emotionScore": "-3"
+      },
+
+      {
+         "speaker":"silence",
+         "startTime": "38.240",
+         "endTime": "43.880",
+         "emotion": "NA",
+         "emotionScore": "NA"
+      },
+
+      {
+         "speaker":"spk2",
+         "startTime": "45.240",
+         "endTime": "54.900",
+         "emotion": "fearful",
+         "emotionScore": "-1"
+      },
+
+      {
+         "speaker":"spk1",
+         "startTime": "15.240",
+         "endTime": "16.900",
+         "emotion": "sad",
+         "emotionScore": "-2"
+      }
+   ],
+
+   "resourceUrl":[
+   {
+       "label": "audioUrl",
+       "url":"audioUrlFromServer.com/some_audio_file.wav"
+   }
+   ]
+        }
+        for(a in data.audioResponse){
+            var tr = document.createElement("tr")
+            tr.setAttribute("id","tableRow")
+            for(b in data.audioResponse[a]){
+                var td = document.createElement("td")
+                tr.appendChild(td);
+                td.innerHTML = data.audioResponse[a][b]
+                
+            }
+             /*if(b == "emotionScore"){
+                 //var x = data.audioResponse[a][b].innerHTML;
+                 td.innerHTML = ""
+                 var progress = document.createElement("div")
+                 var progressBar = document.createElement("div");
+                 progress.appendChild(progressBar);
+                 progress.setAttribute("class", "progress")
+                 progressBar.setAttribute("class", "progress-bar bg-success")
+                 td.appendChild(progress)
+             }*/
+            document.getElementById("myTable").appendChild(tr)
+        }
+        //script by Lokesh: END
+        //script by Madhusri: START
+        /*var data = {
+                       "audioResponse": [
+
+                          {
+                             "speaker":"spk1",
+                             "startTime": "0.0",
+                             "endTime": "15.239",
+                             "emotion": "neutral",
+                             "emotionScore": "0"
+                          },
+
+                          {
+                             "speaker":"silence",
+                             "startTime": "15.240",
+                             "endTime": "16.900",
+                             "emotion": "NA",
+                             "emotionScore": "NA"
+                          },
+
+                          {
+                             "speaker":"spk2",
+                             "startTime": "16.932",
+                             "endTime": "27.320",
+                             "emotion": "happy",
+                             "emotionScore": "2"
+                          },
+
+                          {
+                             "speaker":"spk1",
+                             "startTime": "27.977",
+                             "endTime": "37.900",
+                             "emotion": "anger",
+                             "emotionScore": "-3"
+                          },
+
+                          {
+                             "speaker":"silence",
+                             "startTime": "38.240",
+                             "endTime": "43.880",
+                             "emotion": "NA",
+                             "emotionScore": "NA"
+                          },
+
+                          {
+                             "speaker":"spk2",
+                             "startTime": "45.240",
+                             "endTime": "54.900",
+                             "emotion": "fearful",
+                             "emotionScore": "-1"
+                          },
+
+                          {
+                             "speaker":"spk1",
+                             "startTime": "15.240",
+                             "endTime": "16.900",
+                             "emotion": "sad",
+                             "emotionScore": "-2"
+                          }
+                       ],
+
+                       "resourceUrl":[
+                       {
+                           "label": "audioUrl",
+                           "url":"audioUrlFromServer.com/some_audio_file.wav"
+                       }
+                       ]
+                    }
+        var result = {
+          audioResponse: []
+        };
+
+        for (var item of data.audioResponse) {
+          var existed = result.audioResponse.find(x => x[item.speaker]);
+          if (!existed)
+            result.audioResponse.push({
+              [item.speaker]: []
+            });
+
+          existedArray = result.audioResponse.find(x => x[item.speaker])[item.speaker];
+
+          var copy = {...item};
+          delete copy.speaker;
+          existedArray.push(copy);
+        }
+        console.log(result);
+        for(var e in result.audioResponse["0"]){
+            var spk1Row = document.createElement("tr")
+            spk1Row.setAttribute("id","spk1TableRow")
+            
+        }*/
+        //script by Madhusri: END
+        //chart plotting: START 
+        var audioChart = new Chart(document.getElementById("line-chart"), {
+              type: 'line',
+              data: {
+                //labels: [0.000,10.000,15.000,20.000,25.000,30.000,35.000,40.000,45.000,50.000,55.000,60.000],
+                labels: [0.000,1.000,2.000,3.000,4.000,5.000,6.000,7.000,8.000,9.000,10.000,11.000,12.000,
+                        13.000,14.000,15.000,16.000,17.000,18.000,19.000,20.000,21.000,22.000,23.000,24.000,
+                        25.000,26.000,27.000,28.000,29.000,30.000,31.000,32.000,33.000,34.000,35.000,36.0000,
+                        37.000,38.000,39.000,40.000,41.000,42.000,43.000,44.000,45.000,46.000,47.000,48.000,
+                        49.000,50.000,51.000,52.000,53.000,54.000,55.000,56.000,57.000,58.000,59.000,60.000],
+                datasets: [{ 
+                    data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                          -3,-3,0,0,0,0,0,0,0,0,0,0,
+                          -2,-2,-2,-2,-2,-2,-2,-2,-2,-2,
+                          0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                    label: "Speaker1",
+                    borderColor: "#aec3e2",
+                    fill: true
+                  },
+                  { 
+                    data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                           2,2,2,2,2,2,2,2,2,2,2,
+                           0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+                           0,0,-1,-1,-1,-1,-1,-1,-1,
+                           -1,-1,-1,0,0,0,0,0,0],
+                    label: "Speaker2",
+                    borderColor: "#4ba0fb",
+                    fill: true
+                  }
+                ],
+              },
+              options: {
+                title: {
+                  display: true,
+                  text: 'Sentiment Analysis of Audio sample recording'
+                }
+              }
+});
+        //chart plotting: END 
+    </script>
+</body>
+</html>

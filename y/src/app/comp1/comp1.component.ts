@@ -10,7 +10,6 @@ export class Comp1Component implements OnInit {
   constructor() { }
   selectedInfo;
   ngOnInit() {
-    this.usersDetails = users;
   }
   
 

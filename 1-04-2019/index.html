@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <title>Demo</title>
+</head>
+<style>
+    .logo{
+        background-image: url("./assets/images/sunovaa-logo-only.png");
+        width: 62px;
+        height: 57px;
+        margin-top: 15px;
+        margin-left: 15px;
+    }
+    ::-webkit-file-upload-button {
+        color: #fff;
+        background-color: #007bff;
+        padding: .5rem 1rem;
+        font-size: 1.25rem;
+        line-height: 1.5;
+        border-radius: .3rem;
+        border-color: #007bff;
+        cursor: pointer;
+    }
+    .cs-textWhite{
+        color: #fff;
+    }
+</style>
+<body>
+    <header style="height: 80px">
+        <div class="logo"></div>
+        <nav style="margin-top: -40px;">
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#"><b>Home</b></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Analysis</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Help</a>
+                </li>
+              </ul>
+        </nav>
+    </header>
+    <section class="container" style="max-width:730px;">
+        <img src="./assets/images/upload-bg-btn-removed.png" alt="" srcset="" id="bg_img">
+        <input type="file" name="file" id="audioUpload" style="width:260px; margin:0 auto; display:block; position: relative; bottom: 196px;">
+        <!-- <button class="btn btn-primary btn-lg" id="openLoad" style="width:260px; margin:0 auto; display:block; position: relative; bottom: 196px;">Upload</button> -->
+        <button class="btn btn-primary btn-lg" onclick="showValidate()" id="submitBtn" style="width:260px; margin:0 auto; display:block; position: relative; bottom: 30px;">Submit</button>
+    </section>
+    <footer class="cs-footer p-1 mb-0 text-center cs-textWhite">
+        <!--<p>&copy; Sunovaa Tech. 2019 All Rights Reserved</p>-->
+    </footer> 
+    <script>
+            $(document).ready(function (){
+                        $('#openLoad').click(function (){
+                            $("#audioUpload").trigger('click');
+                            
+                        })
+
+                    })
+                    function showValidate(){
+                        var ext = $('#audioUpload').val().split('.').pop().toLowerCase();
+                        if($.inArray(ext, ['wav']) == -1) {
+                            alert('invalid extension!');
+                        } else {
+                            alert("its Valid")
+                            }
+                    }
+                    
+    </script>
+</body>
+</html>
