@@ -11,6 +11,9 @@ import { ParentCompComponent } from './parent-comp/parent-comp.component';
 import { ChildCompComponent } from './child-comp/child-comp.component';
 import { SecondParentComponent } from './second-parent/second-parent.component';
 import { SecondChildComponent } from './second-child/second-child.component';
+import { SiblingComponent } from './sibling/sibling.component';
+import { LeftComponent } from './sibling/left/left.component';
+import { RightComponent } from './sibling/right/right.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { SecondChildComponent } from './second-child/second-child.component';
     ParentCompComponent,
     ChildCompComponent,
     SecondParentComponent,
-    SecondChildComponent
+    SecondChildComponent,
+    SiblingComponent,
+    LeftComponent,
+    RightComponent
   ],
   imports: [
     BrowserModule,
