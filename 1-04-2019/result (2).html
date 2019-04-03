@@ -264,6 +264,7 @@
             
           }
           
+          var totalTime= 0;
           var spk1Arr = [];
               for(var i=0; i <= result.audioResponse.length-1; i++){
                 if(result.audioResponse[i].hasOwnProperty("spk1")){
@@ -279,15 +280,14 @@
                     
                     
                     var differTime;
-                    var totalTime= 0;
                     differTime = (spk1Arr[j].endTime - spk1Arr[j].startTime);                    
-                    // totalTime += parseFloat(differTime);
-                    // console.log(totalTime)
+                     totalTime += parseFloat(differTime);
+                     console.log(totalTime)
                     
                     spk1Arr[j].differTime = differTime;
                     
                     if(spk1Arr[j].emotion == "happy"){
-                          
+
                      }
                 }
               }
