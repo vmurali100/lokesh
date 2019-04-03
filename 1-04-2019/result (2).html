@@ -83,41 +83,27 @@
 
                             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist"  style="position:relative; top:-39px;">
                                 <li class="nav-item">
-                                  <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Speaker 1</a>
+                                  <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" onclick="showEmotions('spk1')">Speaker 1</a>
                                 </li>
                                 <li class="nav-item">
-                                  <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Speaker 2</a>
+                                  <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"  onclick="showEmotions('spk2')">Speaker 2</a>
                                 </li>
                                 <li class="nav-item">
-                                  <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Silence</a>
+                                  <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false"  onclick="showEmotions('silence')">Silence</a>
                                 </li>
                               </ul>
 
-                            
-                          <table class="table" style="position:relative; top:-39px; width:103%; background-color: #f3f8fe;">
-                            <thead>
-                              <tr>
-                                <th scope="col">Emotion</th>
-                                <!-- <th scope="col">Emotion score</th> -->
-                              </tr>
-                            </thead>
-                              <tbody id="myTable">
+                              <table class="table" style="position:relative; top:-39px; width:103%; background-color: #f3f8fe;">
+                                <tr>  
+                                  <th>Emotion</th>
+                                <th>Emotion Score</th>
+                                </tr>
+                                <tbody id="emotionsTable">
 
+                                </tbody>
+                              </table>
 
-                              </tbody>
-                    
-                          </table>
-                          <table class="table"  style="position:relative; top:-350px; background-color: #f3f8fe; left:200px; width:200px;">
-                            <thead>
-                              <tr>
-                                <th scope="col">Emotion score</th>
-                              </tr>
-                            </thead>
-                              <tbody id="myTable1">
-
-                              </tbody>
-                          </table>
-                          
+                         
                           
                           <div class="tab-content" id="pills-tabContent">
                               <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"></div>
@@ -207,97 +193,89 @@
                        }
                        ]
                     }
-        var staticEmotions = ["Happy", "Calm", "Sad", "Fearful", "Angry"]
+        var speaker1=[];
+        var speaker2=[];
+        var silence=[];
+           for(a in jsonData.audioResponse){
+            if(jsonData.audioResponse[a].speaker == "spk1"){
+              speaker1.push(jsonData.audioResponse[a])
+            }else if(jsonData.audioResponse[a].speaker == "spk2"){
+              speaker2.push(jsonData.audioResponse[a])
+            }else{
+              silence.push(jsonData.audioResponse[a])
+            }
+          }
+
+          function calculateEmotions(emotions){
+            var staticEmotions = [{emotion:"happy",length:'NA', percentage:"NA"}, {emotion:"neutral",length:'NA', percentage:"NA"}, {emotion:"sad",length:'NA', percentage:"NA"}, {emotion:"fearful",length:'NA', percentage:"NA"},{emotion: "anger",length:'NA', percentage:"NA"}]
+
+              var spkEmotions=staticEmotions;
+              var totalEmotions = 0;
+              for(a in emotions){
+               //console.log(emotions[a])
+               
+                for(b in spkEmotions){
+                  if(emotions[a].emotion == spkEmotions[b].emotion){
+                    if(emotions[a].startTime == "0.0"){
+                      spkEmotions[b].length = Number(emotions[a].endTime)
+                      totalEmotions += Number(spkEmotions[b].length)
+                    }else{
+                      var length = emotions[a].endTime-emotions[a].startTime
+                      spkEmotions[b].length = length;
+                      totalEmotions += length;
+
+                    }
+                  }
+                }
+               
+              }
+              for(a in spkEmotions){
+                //console.log(spkEmotions[a])
+                if(spkEmotions[a].length>0){
+                  spkEmotions[a].percentage = Math.round((spkEmotions[a].length/totalEmotions)*100);
+                }
+              }
+            console.log(spk1Emotions)
+            return spkEmotions
+          }
+          var spk1Emotions = calculateEmotions(speaker1)
+          var spk2Emotions = calculateEmotions(speaker2)
+          var silenceEmotions = calculateEmotions(silence);
+          
+          // console.log(spk1Emotions)
+          // console.log(spk2Emotions)
+          // console.log(silenceEmotions)
+
+          function showEmotions(speaker){
+            document.getElementById('emotionsTable').innerHTML=''
+            var showDetails;
+            if(speaker == 'spk1'){
+              showDetails = spk1Emotions;
+            }else if(speaker == 'spk2'){
+              showDetails = spk2Emotions;
+            }else{
+              showDetails = silenceEmotions;
+            }
+            for (a in showDetails){
+              var tr = document.createElement("tr")
+              for(b in showDetails[a]){
+                if(b != "length"){
+                var td = document.createElement('td')
+                td.innerHTML= showDetails[a][b]
+
+                }
+                tr.appendChild(td)
+              }
+              document.getElementById('emotionsTable').appendChild(tr)
+          
+            }
+          }
+          showEmotions('spk1')
         var result = {
           audioResponse: []
         };
-        // for ( a in data.audioResponse){
-        //   if(data.audioResponse[a]["speaker"] === "spk1"){
-        //     console.log((data.audioResponse[a]).length)
-            
-            
-        //     var newArr = [];
-        //     for(var b in data.audioResponse[a]){
-        //       if(b == "emotion" ){
-        //         newArr.push(data.audioResponse[a]);
-        //         var tr = document.createElement("tr")
-        //         var td = document.createElement("td");
-        //         td.innerHTML = b[5];
-        //         tr.appendChild(td);
-        //         document.getElementById("myTable").appendChild(tr)
-
-        //       }
-
-        //     }
-
-        //   }
-        // }
         
-        for (var item of jsonData.audioResponse) {
-          var existed = result.audioResponse.find(x => x[item.speaker]);
-          if (!existed)
-            result.audioResponse.push({
-              [item.speaker]: []
-            });
-
-          existedArray = result.audioResponse.find(x => x[item.speaker])[item.speaker];
-
-          var copy = {...item};
-          delete copy.speaker;
-          existedArray.push(copy);
-        }
-
-        console.log(result);
         
-        //var totalTime = "0";
-        function display(){                                                                         
-          
-          for(a in staticEmotions){
-            var tr = document.createElement("tr");
-            var td = document.createElement("td");
-            //var tdScore = document.createElement("td");
-            tr.appendChild(td);
-            //tr.appendChild(tdScore);
-            //tdScore.innerHTML = "100%"
-            td.innerHTML = staticEmotions[a];
-            document.getElementById("myTable").appendChild(tr);
-            
-          }
-          
-          var totalTime= 0;
-          var spk1Arr = [];
-              for(var i=0; i <= result.audioResponse.length-1; i++){
-                if(result.audioResponse[i].hasOwnProperty("spk1")){
-                  for(var j=0; j <= result.audioResponse[i].spk1.length-1 ; j++){
-                    spk1Arr.push(result.audioResponse[i].spk1[j]);
-                    console.log(spk1Arr);
-                    var tr = document.createElement("tr")
-                    var td = document.createElement("td");
-
-                    td.innerHTML = spk1Arr[j].emotionScore;
-                    tr.appendChild(td);
-                    document.getElementById("myTable1").appendChild(tr)
-                    
-                    
-                    var differTime;
-                    differTime = (spk1Arr[j].endTime - spk1Arr[j].startTime);                    
-                     totalTime += parseFloat(differTime);
-                     console.log(totalTime)
-                    
-                    spk1Arr[j].differTime = differTime;
-                    
-                    if(spk1Arr[j].emotion == "happy"){
-
-                     }
-                }
-              }
-          }
-
-        }
-
-        
-        display();
-        //script by Madhusri: END
         
     </script>
 </body>
