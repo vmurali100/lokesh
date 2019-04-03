@@ -98,7 +98,7 @@
                             <thead>
                               <tr>
                                 <th scope="col">Emotion</th>
-                                <th scope="col">Emotion score</th>
+                                <!-- <th scope="col">Emotion score</th> -->
                               </tr>
                             </thead>
                               <tbody id="myTable">
@@ -106,6 +106,16 @@
 
                               </tbody>
                     
+                          </table>
+                          <table class="table"  style="position:relative; top:-350px; background-color: #f3f8fe; left:200px; width:200px;">
+                            <thead>
+                              <tr>
+                                <th scope="col">Emotion score</th>
+                              </tr>
+                            </thead>
+                              <tbody id="myTable1">
+
+                              </tbody>
                           </table>
                           
                           
@@ -236,43 +246,55 @@
           delete copy.speaker;
           existedArray.push(copy);
         }
+
         console.log(result);
-        var x;
-        // function displaySpk1(){
-        //   x = "spk1"
-        //   display();
-        // }
-        // displaySpk1()
+        
+        //var totalTime = "0";
         function display(){                                                                         
           
-          // var spk1Arr = [];
-          //     for(var i=0; i <= result.audioResponse.length-1; i++){
-          //       if(result.audioResponse[i].hasOwnProperty("spk1")){
-          //         for(var j=0; j <= result.audioResponse[i].spk1.length-1 ; j++){
-          //           spk1Arr.push(result.audioResponse[i].spk1[j]);
-          //           console.log(spk1Arr);
-          //           //tdScore.innerHTML = spk1Arr[j].emotionScore
-          //           // var tr = document.createElement("tr")
-          //           // var td = document.createElement("td");
-          //           // td.innerHTML = spk1Arr[j].emotion;
-          //           // tr.appendChild(td);
-          //           // document.getElementById("myTable").appendChild(tr)
-          //       }
-          //     }
-          // }
           for(a in staticEmotions){
             var tr = document.createElement("tr");
             var td = document.createElement("td");
-            var tdScore = document.createElement("td");
+            //var tdScore = document.createElement("td");
             tr.appendChild(td);
-            tr.appendChild(tdScore);
-            tdScore.innerHTML = ""
+            //tr.appendChild(tdScore);
+            //tdScore.innerHTML = "100%"
             td.innerHTML = staticEmotions[a];
             document.getElementById("myTable").appendChild(tr);
-                       
+            
+          }
+          
+          var spk1Arr = [];
+              for(var i=0; i <= result.audioResponse.length-1; i++){
+                if(result.audioResponse[i].hasOwnProperty("spk1")){
+                  for(var j=0; j <= result.audioResponse[i].spk1.length-1 ; j++){
+                    spk1Arr.push(result.audioResponse[i].spk1[j]);
+                    console.log(spk1Arr);
+                    var tr = document.createElement("tr")
+                    var td = document.createElement("td");
+
+                    td.innerHTML = spk1Arr[j].emotionScore;
+                    tr.appendChild(td);
+                    document.getElementById("myTable1").appendChild(tr)
+                    
+                    
+                    var differTime;
+                    var totalTime= 0;
+                    differTime = (spk1Arr[j].endTime - spk1Arr[j].startTime);                    
+                    // totalTime += parseFloat(differTime);
+                    // console.log(totalTime)
+                    
+                    spk1Arr[j].differTime = differTime;
+                    
+                    if(spk1Arr[j].emotion == "happy"){
+                          
+                     }
+                }
+              }
           }
 
         }
+
         
         display();
         //script by Madhusri: END
