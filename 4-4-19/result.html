@@ -52,21 +52,21 @@
 				<h4 class="cs-blue-text">Overall Call Insights</h4>
 				<div class="cs-top-row cs-audio-wrapper">
 					<div class="row mx-0 mt-4">
-						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 px-1">
+						<!-- <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 px-1">
 							<div class="alert alert-primary" role="alert">
 							  <h4 class="alert-heading text-center">28%</h4>
 							  <p class="text-center">Overall Agreeableness</p>
 							</div>
-						</div>
-						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 px-1">
+						</div> -->
+						<div class="col-xs-6 col-sm-6 col-md-4 col-lg-6 px-1">
 							<div class="alert alert-success" role="alert">
-							  <h4 class="alert-heading text-center">22%</h4>
+							  <h4 class="alert-heading text-center" id="positiveness"></h4>
 							  <p class="text-center">Overall Positiveness</p>
 							</div>
 						</div>
-						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 px-1">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 px-1">
 							<div class="alert alert-danger" role="alert">
-							  <h4 class="alert-heading text-center">72%</h4>
+							  <h4 class="alert-heading text-center " id="negativeness"></h4>
 							  <p class="text-center">Overall Negativeness</p>
 							</div>
 						</div>
@@ -116,7 +116,8 @@
 		<div class="inner">
 		  <!--<p>&copy;2019 All Rights Reserved. Sunovaa Tech.  </p>-->
 		</div>
-    </footer>  
+		</footer> 
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -230,6 +231,7 @@
                 if(spkEmotions[a].length>0){
                   spkEmotions[a].percentage = Math.round((spkEmotions[a].length/totalEmotions)*100);
                 }
+								
               }
             //console.log(spk1Emotions)
             return spkEmotions
@@ -239,7 +241,36 @@
         var silenceEmotions = calculateEmotions(silence);
 		// console.log(spk1Emotions)
 		// console.log(spk2Emotions)
-		// console.log(silenceEmotions)
+		// console.log(silenceEmotions)		
+		var positiveness = 0;
+		var negativeness = 0;
+		console.log(spk1Emotions)
+		function calculatePositiveness (array){
+			for(a in array){
+					
+					if(array[a].emotion=='neutral' || array[a].emotion=='happy'){
+						if(array[a].percentage!='NA'){
+							positiveness+=array[a].percentage
+						}
+					
+					}else{
+						if(array[a].percentage!='NA'){
+							negativeness+=array[a].percentage
+						}
+					}
+				}
+	
+		}
+		calculatePositiveness(spk1Emotions);
+		calculatePositiveness(spk2Emotions);
+		calculatePositiveness(silenceEmotions);
+		var avgpositiveness= positiveness/3;
+		var avgnegativeness= negativeness/3;
+		document.getElementById('negativeness').innerHTML = Math.round(avgnegativeness);
+		document.getElementById('positiveness').innerHTML = Math.round(avgpositiveness)
+
+		console.log(avgnegativeness);
+		console.log(avgpositiveness)
 		function showEmotions(speaker){
 			document.getElementById('emotionsTable').innerHTML=''
 			var showDetails;
@@ -251,20 +282,21 @@
 			  showDetails = silenceEmotions;
 			}
 			for (a in showDetails){
-			  var tr = document.createElement("tr")
-			  for(b in showDetails[a]){
-				if(b != "length"){
-				var td = document.createElement('td')
-				td.innerHTML= showDetails[a][b]
+				if(showDetails[a].percentage != 'NA'){
+				var tr = $("<tr><td>"+showDetails[a].emotion+"</td><td><div class='progress'><div class='progress-bar' style='width: "+showDetails[a].percentage+"%' aria-valuemin='0' aria-valuemax='100'>"+showDetails[a].percentage+"%</div></div></td></tr>")
+				}else{
+					var tr = $("<tr><td>"+showDetails[a].emotion+"</td><td>"+showDetails[a].percentage+"</td></tr>")
 				}
-				tr.appendChild(td)
-			  }
-			  document.getElementById('emotionsTable').appendChild(tr)
-
+				$('#emotionsTable').append(tr)
+				
+				var overAllPositiveness;
+				//console.log(showDetails[a])
+				if(showDetails[a]){}
 			}
+			
 }
+
 		showEmotions('spk1')
-		
     </script>
 </body>
 </html>
