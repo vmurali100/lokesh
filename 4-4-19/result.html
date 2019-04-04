@@ -266,8 +266,8 @@
 		calculatePositiveness(silenceEmotions);
 		var avgpositiveness= positiveness/3;
 		var avgnegativeness= negativeness/3;
-		document.getElementById('negativeness').innerHTML = Math.round(avgnegativeness);
-		document.getElementById('positiveness').innerHTML = Math.round(avgpositiveness)
+		document.getElementById('negativeness').innerHTML = (Math.round(avgnegativeness)+"%");
+		document.getElementById('positiveness').innerHTML = (Math.round(avgpositiveness)+"%")
 
 		console.log(avgnegativeness);
 		console.log(avgpositiveness)
