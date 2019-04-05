@@ -4,5 +4,5 @@
 <div *ngIf="recievedinfo">
     
   <input type="text" value="{{recievedinfo.fname}}" #myForm>
-  <button (click)="update(myForm.value)">Update</button>
+  <button class="btn btn-primary" (click)="update(myForm.value)" style="margin-left:20px;">Update</button>
 </div>
