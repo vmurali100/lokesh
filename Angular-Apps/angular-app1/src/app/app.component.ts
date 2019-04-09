@@ -8,7 +8,13 @@ import { CommonService } from "./common.service";
 })
 export class AppComponent {
   title = "angular-app1";
-  constructor(private commonService: CommonService) {
-    console.log(this.commonService.getuser());
+  users;
+  constructor(private commonService: CommonService) {}
+
+  getUsers() {
+    console.log(this.users);
+    this.commonService.getuser(this.users).subscribe(res => {
+      console.log(res);
+    });
   }
 }

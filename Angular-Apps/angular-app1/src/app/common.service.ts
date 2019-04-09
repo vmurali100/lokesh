@@ -6,11 +6,10 @@ import { HttpClient } from "@angular/common/http";
 })
 export class CommonService {
   constructor(private _http: HttpClient) {}
-  getuser() {
-    this._http
-      .get("http://www.filltext.com/?rows=5&fname={firstName}&pretty=true")
-      .subscribe(data => {
-        console.log(data);
-      });
+  getuser(nos) {
+    return this._http.get(
+      `http://www.filltext.com/?rows=${nos}&fname={firstName}&pretty=true`
+      // "http://www.filltext.com/?rows=5&fname={firstName}&pretty=true"
+    );
   }
 }
