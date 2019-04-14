@@ -1,0 +1,21 @@
+<!-- <router-outlet></router-outlet> -->
+<select name="" id="" (change)="getCountryInfo(country)" [(ngModel)]="country">
+  <option value="0">Select Contry</option>
+  <option *ngFor="let country of countries"> {{ country.name }}</option>
+</select>
+
+<select
+  name=""
+  id=""
+  (change)="getDistricts(state)"
+  [(ngModel)]="state"
+  *ngIf="states"
+>
+  <option value="0">Select State</option>
+  <option [value]="state" *ngFor="let state of states"> {{ state }}</option>
+</select>
+
+<select *ngIf="cities">
+  <option value="0">Select City</option>
+  <option [value]="city" *ngFor="let city of cities"> {{ city }}</option>
+</select>
