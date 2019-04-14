@@ -6,7 +6,6 @@ import { Component, OnInit, Input } from "@angular/core";
   styleUrls: ["./child.component.css"]
 })
 export class ChildComponent implements OnInit {
-  @Input() receiveble;
   constructor() {}
 
   ngOnInit() {}
