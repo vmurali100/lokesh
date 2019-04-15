@@ -131,7 +131,7 @@
                              "speaker":"spk1",
                              "startTime": "0.0",
                              "endTime": "15.239",
-                             "emotion": "neutral",
+                             "emotion": "calm",
                              "emotionScore": "0"
                           },
 
@@ -179,7 +179,7 @@
                              "speaker":"spk1",
                              "startTime": "15.240",
                              "endTime": "16.900",
-                             "emotion": "sad",
+                             "emotion": "calm",
                              "emotionScore": "-2"
                           }
                        ],
@@ -204,7 +204,7 @@
             }
           }
         function calculateEmotions(emotions){
-            var staticEmotions = [{emotion:"happy",length:'NA', percentage:"NA"}, {emotion:"neutral",length:'NA', percentage:"NA"}, {emotion:"sad",length:'NA', percentage:"NA"}, {emotion:"fearful",length:'NA', percentage:"NA"},{emotion: "anger",length:'NA', percentage:"NA"}]
+            var staticEmotions = [{emotion:"happy",length:'NA', percentage:"NA"}, {emotion:"calm",length:'NA', percentage:"NA"}, {emotion:"sad",length:'NA', percentage:"NA"}, {emotion:"fearful",length:'NA', percentage:"NA"},{emotion: "anger",length:'NA', percentage:"NA"}]
 
               var spkEmotions=staticEmotions;
               var totalEmotions = 0;
@@ -217,8 +217,9 @@
                       spkEmotions[b].length = Number(emotions[a].endTime)
                       totalEmotions += Number(spkEmotions[b].length)
                     }else{
+											
                       var length = emotions[a].endTime-emotions[a].startTime
-                      spkEmotions[b].length = length;
+                      spkEmotions[b].length += length;
                       totalEmotions += length;
 
                     }
@@ -248,7 +249,7 @@
 		function calculatePositiveness (array){
 			for(a in array){
 					
-					if(array[a].emotion=='neutral' || array[a].emotion=='happy'){
+					if(array[a].emotion=='calm' || array[a].emotion=='happy'){
 						if(array[a].percentage!='NA'){
 							positiveness+=array[a].percentage
 						}
@@ -264,10 +265,10 @@
 		calculatePositiveness(spk1Emotions);
 		calculatePositiveness(spk2Emotions);
 		calculatePositiveness(silenceEmotions);
-		var avgpositiveness= positiveness/3;
-		var avgnegativeness= negativeness/3;
-		document.getElementById('negativeness').innerHTML = (Math.round(avgnegativeness)+"%");
-		document.getElementById('positiveness').innerHTML = (Math.round(avgpositiveness)+"%")
+		var avgpositiveness= positiveness/2;
+		var avgnegativeness= negativeness/2;
+		document.getElementById('negativeness').innerHTML = ((avgnegativeness).toFixed(2)+"%");
+		document.getElementById('positiveness').innerHTML = ((avgpositiveness).toFixed(2)+"%")
 
 		console.log(avgnegativeness);
 		console.log(avgpositiveness)
@@ -281,6 +282,7 @@
 			}else{
 			  showDetails = silenceEmotions;
 			}
+
 			for (a in showDetails){
 				if(showDetails[a].percentage != 'NA'){
 				var tr = $("<tr><td>"+showDetails[a].emotion+"</td><td><div class='progress'><div class='progress-bar' style='width: "+showDetails[a].percentage+"%' aria-valuemin='0' aria-valuemax='100'>"+showDetails[a].percentage+"%</div></div></td></tr>")
@@ -290,7 +292,7 @@
 				$('#emotionsTable').append(tr)
 				
 				var overAllPositiveness;
-				//console.log(showDetails[a])
+				console.log(showDetails[a])
 				if(showDetails[a]){}
 			}
 			
