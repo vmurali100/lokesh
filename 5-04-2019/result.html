@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="./assets/images/sunovaa-logo-only.png" type="image/png" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <title>Sunovaa - Sentiment Analysis</title>
+</head>
+<body>
+    <!-- Navigation -->
+	<nav class="navbar navbar-expand-lg">
+	  <div class="container-fluid">
+		<a class="navbar-brand" href="#">
+			  <img src="./assets/images/sunovaa-logo-only.png" alt="Sunvoaa Logo">
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+			  <span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarResponsive">
+		  <ul class="navbar-nav ml-auto">
+			<li class="nav-item">
+			  <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal">Load another file
+					<span class="sr-only">(current)</span>
+				  </a>
+			</li>
+			<li class="nav-item active">
+			  <a class="nav-link" href="#"><b>Insights</b></a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link disabled" href="#">Help</a>
+			</li>
+		  </ul>
+		</div>
+	  </div>
+	</nav>
+	<!-- Page Content -->
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<h4 class="cs-blue-text">Overall Call</h4>
+				<div class="cs-top-row  cs-audio-wrapper cs-lightblue-bg p-5">
+					<audio controls= "controls" class="col-sm-8 d-block">
+                            <source src="./assets/audio/Plumbing-Call-Recording.wav" type="audio/wav">
+                          Your browser does not support the audio element.
+                    </audio>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<h4 class="cs-blue-text">Overall Call Insights</h4>
+				<div class="cs-top-row cs-audio-wrapper">
+					<div class="row mx-0 mt-4">
+						<!-- <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 px-1">
+							<div class="alert alert-primary" role="alert">
+							  <h4 class="alert-heading text-center">28%</h4>
+							  <p class="text-center">Overall Agreeableness</p>
+							</div>
+						</div> -->
+						<div class="col-xs-6 col-sm-6 col-md-4 col-lg-6 px-1">
+							<div class="alert alert-success" role="alert">
+							  <h4 class="alert-heading text-center" id="positiveness"></h4>
+							  <p class="text-center">Overall Positivity</p>
+							</div>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 px-1">
+							<div class="alert alert-danger" role="alert">
+							  <h4 class="alert-heading text-center " id="negativeness"></h4>
+							  <p class="text-center">Overall Negativity</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<h4 class="cs-blue-text">Speaker Sentiment</h4>
+				<div class="cs-bottom-row cs-audio-wrapper cs-lightblue-bg py-2">
+					<canvas id="line-chart" width="200" height="100"></canvas>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+				<h4 class="cs-blue-text">Speaker Sentiment Analysis</h4>
+				<ul class="nav nav-pills mt-4 mb-3" id="pills-tab" role="tablist">
+						<li class="nav-item">
+						  <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" onclick="showEmotions('spk1')">Speaker 1</a>
+						</li>
+						<li class="nav-item">
+						  <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"  onclick="showEmotions('spk2')">Speaker 2</a>
+						</li>
+						<li class="nav-item">
+						  <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false"  onclick="showEmotions('silence')">Silence</a>
+						</li>
+					  </ul>
+				<div class="cs-audio-wrapper cs-lightblue-bg">
+					<div class="table-responsive">
+						<table class="table">
+							<tr class="cs-blue-text">  
+								<th>Emotion</th>
+								<th>Emotion Index</th>
+								<th>Emotion Score (in %)</th>
+							</tr>
+							<tbody id="emotionsTable">
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+			<h4 class="cs-blue-text">Sentiment</h4>
+			<div class="cs-top-row cs-audio-wrapper">
+				<div class="row mx-0 mt-4">
+					<div class="col-xs-6 col-sm-6 col-md-4 col-lg-6 px-1">
+						<div class="alert alert-success" role="alert">
+							<h4 class="alert-heading text-center" id="positiveness"></h4>
+							<p class="text-center">Speaker 1</p>
+						</div>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 px-1">
+						<div class="alert alert-danger" role="alert">
+							<h4 class="alert-heading text-center " id="negativeness"></h4>
+							<p class="text-center">Speaker 2</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		<!-- popUp -->
+		<!-- Button trigger modal -->
+				
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+									<img src="./assets/images/upload-bg.png" alt="Chose a file to upload" id="bg_img" class="mt-4 d-block mx-auto img-fluid cs-img-border">
+									<input type="file" name="file" id="audioUpload" class="d-block mx-auto cs-btn-w" style="position: relative; bottom: 196px;">
+									<div class="cs-samplesContainer text-center" style="position: relative; bottom: 40px;"></div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary">Submit</button>
+							</div>
+						</div>
+					</div>
+				</div>
+		<!-- popUp End -->
+	</div>
+	<!-- /.container -->
+    
+    <footer class="mt-0 mb-0 text-center">
+		<div class="inner">
+		  <!--<p>&copy;2019 All Rights Reserved. Sunovaa Tech.  </p>-->
+		</div>
+		</footer> 
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+	<script src="assets/js/script-charts.js"></script>
+    <script type="text/javascript">
+		var jsonData = {
+	"audioResponse": [{
+		"speaker": "spk1",
+		"startTime": 0.1,
+		"endTime": 1.3000000000000003,
+		"emotion": "calm",
+		"emotionScore": 1
+	}, {
+		"speaker": "spk2",
+		"startTime": 1.3000000000000003,
+		"endTime": 3.9000000000000004,
+		"emotion": "angry",
+		"emotionScore": -3
+	}, {
+		"speaker": "spk1",
+		"startTime": 3.9000000000000004,
+		"endTime": 5.9,
+		"emotion": "sad",
+		"emotionScore": -2
+	}, {
+		"speaker": "silence",
+		"startTime": 5.9,
+		"endTime": 9.5,
+		"emotion": "sad",
+		"emotionScore": -2
+	}, {
+		"speaker": "spk2",
+		"startTime": 9.5,
+		"endTime": 12.3,
+		"emotion": "fearful",
+		"emotionScore": -1
+	}, {
+		"speaker": "spk1",
+		"startTime": 12.3,
+		"endTime": 16.1,
+		"emotion": "fearful",
+		"emotionScore": -1
+	}, {
+		"speaker": "silence",
+		"startTime": 16.1,
+		"endTime": 18.900000000000002,
+		"emotion": "angry",
+		"emotionScore": -3
+	}, {
+		"speaker": "spk2",
+		"startTime": 18.900000000000002,
+		"endTime": 22.500000000000004,
+		"emotion": "fearful",
+		"emotionScore": -1
+	}, {
+		"speaker": "silence",
+		"startTime": 22.500000000000004,
+		"endTime": 25.900000000000002,
+		"emotion": "angry",
+		"emotionScore": -3
+	}, {
+		"speaker": "spk1",
+		"startTime": 25.900000000000002,
+		"endTime": 27.900000000000002,
+		"emotion": "angry",
+		"emotionScore": -3
+	}, {
+		"speaker": "silence",
+		"startTime": 27.900000000000002,
+		"endTime": 29.300000000000004,
+		"emotion": "angry",
+		"emotionScore": -3
+	}, {
+		"speaker": "spk1",
+		"startTime": 29.300000000000004,
+		"endTime": 30.700000000000003,
+		"emotion": "angry",
+		"emotionScore": -3
+	}, {
+		"speaker": "silence",
+		"startTime": 30.700000000000003,
+		"endTime": 33.7,
+		"emotion": "angry",
+		"emotionScore": -3
+	}, {
+		"speaker": "spk2",
+		"startTime": 33.7,
+		"endTime": 35.7,
+		"emotion": "angry",
+		"emotionScore": -3
+	}, {
+		"speaker": "silence",
+		"startTime": 35.7,
+		"endTime": 42.7,
+		"emotion": "angry",
+		"emotionScore": -3
+	}, {
+		"speaker": "spk2",
+		"startTime": 42.7,
+		"endTime": 51.7,
+		"emotion": "angry",
+		"emotionScore": -3
+	}],
+	"resourceUrl": [{
+		"sentiment": 
+            {
+               "spk1": -0.012857142857142862, 
+               "spk2": 0.1880952380952381
+            }, 
+		"label": "audioUrl",
+		"url": "/media/Plumbing-Call-Recording_2_mhJTFlc.wav", 
+    "duration": 128.52351473922903
+	}]
+}
+
+        var speaker1=[];
+        var speaker2=[];
+        var silence=[];
+        for(a in jsonData.audioResponse){
+            if(jsonData.audioResponse[a].speaker == "spk1"){
+							speaker1.push(jsonData.audioResponse[a])
+            }else if(jsonData.audioResponse[a].speaker == "spk2"){
+              speaker2.push(jsonData.audioResponse[a])
+            }else{
+              silence.push(jsonData.audioResponse[a])
+            }
+					}
+					
+					console.log(speaker1)
+        	function calculateEmotions(emotions){
+            var staticEmotions = [{emotion:"happy", emotionIndex: 2, length:'NA', percentage:"NA"}, {emotion:"calm", emotionIndex: 0, length:'NA', percentage:"NA"}, {emotion:"sad", emotionIndex: -2, length:'NA', percentage:"NA"}, {emotion:"fearful", emotionIndex: -1, length:'NA', percentage:"NA"},{emotion: "angry", emotionIndex: -3, length:'NA', percentage:"NA"}]
+
+              var spkEmotions=staticEmotions;
+							var totalEmotions = 0;
+							var sumOfLengthOfSad = 0;
+							var sumOfLengthOfAnger = 0;
+							var sumOfLengthOfHappy = 0;
+							var sumOfLengthOfCalm = 0;
+							var sumOfLengthOfFearful = 0;
+							var length = 0;
+              for(a in emotions){
+               //console.log(emotions[a])
+               // adding total emotions for the five emotions selected above
+                for(b in spkEmotions){
+                  if(emotions[a].emotion == spkEmotions[b].emotion){
+                    // if(emotions[a].startTime == "0.0"){
+                    //   spkEmotions[b].length = Number(emotions[a].endTime)
+                    //   totalEmotions += Number(spkEmotions[b].length)
+                    // }else{	
+											
+                      length = emotions[a].endTime-emotions[a].startTime
+                      spkEmotions[b].length = length;
+											totalEmotions += length;
+											
+											if(emotions[a].emotion == "sad"){
+												sumOfLengthOfSad += length;
+												spkEmotions[b].length = sumOfLengthOfSad;
+
+											}
+											if(emotions[a].emotion == "happy"){
+												sumOfLengthOfHappy += length;
+												spkEmotions[b].length = sumOfLengthOfHappy;
+
+											}
+											if(emotions[a].emotion == "calm"){
+												sumOfLengthOfCalm += length;
+												spkEmotions[b].length = sumOfLengthOfCalm;
+
+											}
+											if(emotions[a].emotion == "fearful"){
+												sumOfLengthOfFearful += length;
+												spkEmotions[b].length = sumOfLengthOfFearful;
+
+											}
+											if(emotions[a].emotion == "angry"){
+												sumOfLengthOfAnger += length;
+												spkEmotions[b].length = sumOfLengthOfAnger;
+
+											}
+										
+
+                    // }
+									}
+									
+								}
+								
+               
+							}
+							
+              for(a in spkEmotions){
+                //console.log(spkEmotions[a])
+                if(spkEmotions[a].length>0){
+                  spkEmotions[a].percentage = ((spkEmotions[a].length/totalEmotions)*100);
+								}
+								
+			
+								
+              }
+            //console.log(spk1Emotions)
+            return spkEmotions
+          }
+        var spk1Emotions = calculateEmotions(speaker1)
+        var spk2Emotions = calculateEmotions(speaker2)
+        var silenceEmotions = calculateEmotions(silence);
+		// console.log(spk1Emotions)
+		// console.log(spk2Emotions)
+		// console.log(silenceEmotions)		
+		var positiveness = 0;
+		var negativeness = 0;
+		console.log(spk1Emotions)
+		function calculatePositiveness (array){
+			for(a in array){
+					
+					if(array[a].emotion=='calm' || array[a].emotion=='happy'){
+						if(array[a].percentage!='NA'){
+							positiveness+=array[a].percentage
+						}
+					
+					}else{
+						if(array[a].percentage!='NA'){
+							negativeness+=array[a].percentage
+						}
+					}
+				}
+	
+		}
+		calculatePositiveness(spk1Emotions);
+		calculatePositiveness(spk2Emotions);
+		calculatePositiveness(silenceEmotions);
+		var avgpositiveness= positiveness/3;
+		var avgnegativeness= negativeness/3;
+		document.getElementById('negativeness').innerHTML = ((avgnegativeness).toFixed(2)+"%");
+		document.getElementById('positiveness').innerHTML = ((avgpositiveness).toFixed(2)+"%")
+
+		console.log(avgnegativeness);
+		console.log(avgpositiveness)
+		function showEmotions(speaker){
+			document.getElementById('emotionsTable').innerHTML=''
+			var showDetails;
+			if(speaker == 'spk1'){
+			  showDetails = spk1Emotions;
+			}else if(speaker == 'spk2'){
+			  showDetails = spk2Emotions;
+			}else{
+			  showDetails = silenceEmotions;
+			}
+			for (a in showDetails){
+				if(showDetails[a].percentage != 'NA'){
+				// var tr = $("<tr><td>"+showDetails[a].emotion+"</td><td>"+showDetails[a].emotionIndex+"</td><td><div class='progress'><div class='progress-bar' style='width: "+showDetails[a].percentage+"%' aria-valuemin='0' aria-valuemax='100'>"+showDetails[a].percentage+"%</div></div></td></tr>")
+				
+				if(showDetails[a].emotion == "happy"){
+					var tr = $("<tr><td>"+showDetails[a].emotion+"</td><td>"+showDetails[a].emotionIndex+"</td><td><div class='progress'><div class='progress-bar bg-success' style='width: "+showDetails[a].percentage+"%' aria-valuemin='0' aria-valuemax='100'>"+showDetails[a].percentage.toFixed(2)+"%</div></div></td></tr>")
+				}
+			else if (showDetails[a].emotion == "sad"){				
+					var tr = $("<tr><td>"+showDetails[a].emotion+"</td><td>"+showDetails[a].emotionIndex+"</td><td><div class='progress'><div class='progress-bar bg-warning' style='width: "+showDetails[a].percentage+"%' aria-valuemin='0' aria-valuemax='100'>"+showDetails[a].percentage.toFixed(2)+"%</div></div></td></tr>")
+			}
+			else if (showDetails[a].emotion == "calm"){				
+					var tr = $("<tr><td>"+showDetails[a].emotion+"</td><td>"+showDetails[a].emotionIndex+"</td><td><div class='progress'><div class='progress-bar bg-info' style='width: "+showDetails[a].percentage+"%' aria-valuemin='0' aria-valuemax='100'>"+showDetails[a].percentage.toFixed(2)+"%</div></div></td></tr>")
+			}
+			else if (showDetails[a].emotion == "fearful"){				
+					var tr = $("<tr><td>"+showDetails[a].emotion+"</td><td>"+showDetails[a].emotionIndex+"</td><td><div class='progress'><div class='progress-bar' style='width: "+showDetails[a].percentage+"%' aria-valuemin='0' aria-valuemax='100'>"+showDetails[a].percentage.toFixed(2)+"%</div></div></td></tr>")
+			}
+			else{				
+					var tr = $("<tr><td>anger</td><td>"+showDetails[a].emotionIndex+"</td><td><div class='progress'><div class='progress-bar bg-danger' style='width: "+showDetails[a].percentage+"%' aria-valuemin='0' aria-valuemax='100'>"+showDetails[a].percentage.toFixed(2)+"%</div></div></td></tr>")
+			}
+				}else{
+					var tr = $("<tr><td>"+showDetails[a].emotion+"</td><td>"+showDetails[a].emotionIndex+"</td><td>"+showDetails[a].percentage+"</td></tr>")
+				}
+				$('#emotionsTable').append(tr)
+				var overAllPositiveness;
+				
+				//console.log(showDetails[a])
+				
+			}
+}
+
+
+		showEmotions('spk1')
+    </script>
+</body>
+</html>
