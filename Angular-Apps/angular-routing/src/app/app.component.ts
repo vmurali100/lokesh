@@ -9,8 +9,6 @@ export class AppComponent {
   constructor(private commonService: CommonService) {}
   title = "angular-routing";
   ngOnInit() {
-    this.commonService.getData().subscribe(res => {
-      console.log(res);
-    });
+    this.commonService.getData();
   }
 }
