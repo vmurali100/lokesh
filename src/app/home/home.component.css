@@ -1,0 +1,23 @@
+::-webkit-file-upload-button {
+    color: #fff;
+    background-color: #007bff;
+    padding: .2rem 1rem;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    border-radius: .3rem;
+    border-color: #007bff;
+    cursor: pointer;
+}
+/*custom width of the btns used*/
+.cs-btn-w{width: 260px;}
+/*custom bg colors*/
+.cs-lightblue-bg{background-color: #f3f8fe}
+/*custom text colors*/
+.cs-white-text{color: #fff}
+.cs-blue-text{color: #4ba0fb}
+/* .cs-top-row{height: 100px;} */
+.cs-bottom-row{height: 384px;
+}
+.progress{
+background-color: #a4a7ab
+}
