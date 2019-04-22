@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>hamburger slide accordion menu</title>
+  
+  
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Dosis'>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+<div class="container-fluid">
+<div class="main-container">
+  <div id="menu-container">
+   <div id="menu-wrapper">
+      <div id="hamburger-menu"><span></span><span></span><span></span></div>
+      <!-- hamburger-menu -->
+   </div>
+   <!-- menu-wrapper -->
+   <ul class="menu-list accordion">
+      <li id="nav1" class="toggle accordion-toggle"> 
+         <span class="icon-plus"></span>
+         <a class="menu-link" href="#">Topic 1</a>
+      </li>
+      <!-- accordion-toggle -->
+      <ul class="menu-submenu accordion-content">
+          <li class="draggable ui-widget-content"><a class="head" href="#">Sub Topic 1</a></li>
+         <li class="draggable ui-widget-content"><a class="head" href="#">Sub Topic 2</a></li>
+      </ul>
+      <!-- menu-submenu accordon-content-->
+      <li id="nav2" class="toggle accordion-toggle"> 
+         <span class="icon-plus"></span>
+         <a class="menu-link" href="#">Topic 2</a>
+      </li>
+      <!-- accordion-toggle -->
+      <ul class="menu-submenu accordion-content">
+         <li class="draggable ui-widget-content"><a class="head" href="#">Sub Topic 1</a></li>
+         <li class="draggable ui-widget-content"><a class="head" href="#">Sub Topic 2</a></li>
+      </ul>
+      <!-- menu-submenu accordon-content-->
+         
+      <!-- menu-submenu accordon-content-->
+   </ul>
+   <!-- menu-list accordion-->
+</div>
+    <div id="droppable">
+    </div>
+</div>
+<!-- popUP -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Person Details</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <form>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter name">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">City</label>
+                    <input type="text" class="form-control" id="city" placeholder="Enter city">
+                  </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+<!--
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-primary">Submit</button>
+            </div>
+-->
+         </div>
+      </div>
+   </div>
+<!-- popUP End -->
+</div>
+<!-- menu-container -->
+  <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" 
+         rel = "stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.0.slim.min.js" integrity="sha256-ZaXnYkHGqIhqTbJ6MB4l9Frs/r7U4jlx7ir8PJYBqbI=" crossorigin="anonymous"></script>
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+      
+  
+
+    <script  src="js/index.js"></script>
+
+
+
+
+</body>
+
+</html>
