@@ -7,10 +7,25 @@ import { CommonService } from "../common.service";
   styleUrls: ["./about.component.css"]
 })
 export class AboutComponent implements OnInit {
+  data: any;
+  companies = [];
   constructor(private commonService: CommonService) {}
 
   ngOnInit() {
-    console.log(this.commonService.getUsers());
-    this.commonService.getUsers();
+    this.data = this.commonService.getUsers();
+    if (this.data == undefined) {
+      this.commonService.getData().subscribe(res => {
+        this.data = res;
+        for (let obj of this.data) {
+          this.companies.push(obj.company);
+        }
+      });
+    } else {
+      for (let obj of this.data) {
+        this.companies.push(obj.company);
+      }
+    }
+
+    console.log(this.companies);
   }
 }

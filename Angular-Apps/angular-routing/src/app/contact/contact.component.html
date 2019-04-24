@@ -3,3 +3,7 @@
 </p>
 <h2>Contact Information</h2>
 <p>Name , Email And Phone</p>
+
+<ul>
+  <li *ngFor="let user of userInfo">{{ user.name }} - {{ user.email }}</li>
+</ul>
