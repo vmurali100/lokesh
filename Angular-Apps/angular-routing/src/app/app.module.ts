@@ -9,6 +9,8 @@ import { ContactComponent } from "./contact/contact.component";
 import { GalleryComponent } from "./gallery/gallery.component";
 import { LoginComponent } from "./login/login.component";
 import { HttpClientModule } from "@angular/common/http";
+import { EditComponent } from "./home/edit/edit.component";
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -17,9 +19,10 @@ import { HttpClientModule } from "@angular/common/http";
     AboutComponent,
     ContactComponent,
     GalleryComponent,
-    LoginComponent
+    LoginComponent,
+    EditComponent
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent]
 })

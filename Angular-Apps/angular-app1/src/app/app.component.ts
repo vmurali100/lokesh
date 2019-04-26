@@ -8,4 +8,9 @@ import { CommonService } from "./common.service";
 })
 export class AppComponent {
   constructor(private commonService: CommonService) {}
+  ngOnInit() {
+    console.log(typeof this.commonService);
+    console.log(this);
+  }
+  sayHello() {}
 }

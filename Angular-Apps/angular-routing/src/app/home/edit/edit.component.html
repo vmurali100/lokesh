@@ -1,0 +1,42 @@
+<div class="container">
+  <form #myUser="ngForm">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input
+        type="email"
+        class="form-control"
+        name="email"
+        placeholder="Enter email"
+        [(ngModel)]="selectedUser.email"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        class="form-control"
+        name="username"
+        placeholder="User Name"
+        [(ngModel)]="selectedUser.username"
+      />
+    </div>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Name"
+        name="name"
+        [(ngModel)]="selectedUser.name"
+        required
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="!myUser.valid">
+      Submit
+    </button>
+  </form>
+  <pre>{{ myUser.valid | json }}</pre>
+  <pre>{{ myUser | json }}</pre>
+</div>

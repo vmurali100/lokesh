@@ -4,16 +4,19 @@ import { Routes, RouterModule } from "@angular/router";
 import { HomeComponent } from "./home/home.component";
 import { AboutComponent } from "./about/about.component";
 import { ContactComponent } from "./contact/contact.component";
-import { GalleryComponent } from './gallery/gallery.component';
-import { LoginComponent } from './login/login.component';
+import { GalleryComponent } from "./gallery/gallery.component";
+import { LoginComponent } from "./login/login.component";
+import { EditComponent } from "./home/edit/edit.component";
 
 //Step 2: Creating Routes
 const routes: Routes = [
   { path: "", component: HomeComponent },
   { path: "about", component: AboutComponent },
   { path: "contact", component: ContactComponent },
-  { path: "gallery", component: GalleryComponent},
-  {path: "login", component: LoginComponent}
+  { path: "gallery", component: GalleryComponent },
+  { path: "login", component: LoginComponent },
+  { path: "edit", component: EditComponent },
+  { path: "edit/:name/:username/:email", component: EditComponent }
 ];
 
 //Step 3: Configuring NgModule

@@ -4,5 +4,9 @@
 <h2>User Names</h2>
 
 <ul>
-  <li *ngFor="let user of userNames">{{ user }}</li>
+  <li *ngFor="let user of users">
+    <a routerLink="edit/{{ user.name }}/{{ user.username }}/{{ user.email }}">{{
+      user.name
+    }}</a>
+  </li>
 </ul>
